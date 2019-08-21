@@ -45,7 +45,26 @@
   - When eating an edible, it should be pushed into a "stomach" property which is an array.
   - Give persons the ability to poop.
   - When pooping, the stomach should empty.
+*/
+function Person (name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
 
+Person.prototype.greet = function () {
+  return 'Hello my name is ' + this.name + ' I am ' + this.age + ' years old';
+}
+
+Person.prototype.eat = function (edibles) {
+  this.stomach.push(edibles); 
+}
+Person.prototype.poop = function () {
+  this.stomach = [];
+}
+const dude = new Person('duro', 2);
+
+/*
   TASK 2
 
   - Build a Car constructor that takes model name and make.
@@ -55,7 +74,24 @@
   - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   - Give cars the ability to be repaired.
   - A repaired car can be driven again.
+  */
+function Car (modelName, make) {
+  this.modelName = modelName;
+  this.make = make;
+  this.odometer = 0;
+}
+Car.prototype.drive = function (distance) {
+  this.odometer = this.odometer + distance;
+}
+Car.prototype.crash = function () {
+  return "I crashed at " + this.odometer + " miles!"
+}
+Car.prototype.repaired = function () {
+  return "Can be driven again";
+}
 
+
+/*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
