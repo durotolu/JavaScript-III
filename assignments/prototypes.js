@@ -80,8 +80,8 @@ function Car (modelName, make) {
   this.make = make;
   this.odometer = 0;
 }
-Car.prototype.drive = function (distance) {
-  this.odometer = this.odometer + distance;
+Car.prototype.drive = function (distance= 0) {
+  return this.odometer = this.odometer + Number(distance);
 }
 Car.prototype.crash = function () {
   return "I crashed at " + this.odometer + " miles!"
@@ -89,7 +89,11 @@ Car.prototype.crash = function () {
 Car.prototype.repaired = function () {
   return "Can be driven again";
 }
+Car.prototype.reset = function (distance) {
+  return this.odometer = 0;
+}
 
+var firstCar = new Car ('toyota', 'corolla');
 
 /*
   TASK 3
@@ -98,7 +102,18 @@ Car.prototype.repaired = function () {
   - Babies of course inherit the ability to greet, which can be strange.
   - Babies should have the ability to play, which persons don't.
   - By playing, a string is returned with some text of your choosing.
+  */
+function Baby (name, age) {
+  Person.apply(this, [name, age]);
+}
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function () {
+  return `${this.name} plays too much`;
+}
 
+//var smallie = new Baby ('ken', 2)
+
+  /*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
