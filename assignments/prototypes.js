@@ -119,9 +119,23 @@ Baby.prototype.play = function () {
   Use your imagination and come up with constructors that allow to build objects
   With amazing and original capabilities. Build 3 small ones, or a very
   complicated one with lots of state. Surprise us!
-
 */
+function Devices (make, storage, size) {
+  this.make = make;
+  this.storage = storage;
+  this.size = size;
+}
+Devices.prototype.browse = function () {
+  return `${this.name} can browse`;
+}
+Devices.prototype.pocket = function () {
+  if (this.size === 'mobile' || this.size === 'tablet')
+  {
+    return `${this.make} can fit in your pocket or purse`;
+  } return `not pocket sized`;
+}
 
+var newPhone = new Devices('iphone', 1, 'tablet');
 /*
 
   STRETCH TASK
