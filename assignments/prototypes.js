@@ -154,6 +154,14 @@ var newPhone = new Devices('iphone', 1, 'tablet');
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
+function GameObject () {
+  this.createdAt = createdAt;
+  this.name = name;
+  this.dimensions = dimensions;
+}
+GameObject.prototype.destroy = function () {
+  returns `${this.name} was removed from the game.`;
+}
 
 /*
   === CharacterStats ===
@@ -161,6 +169,7 @@ var newPhone = new Devices('iphone', 1, 'tablet');
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+function CharacterStats () {}
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -171,6 +180,7 @@ var newPhone = new Devices('iphone', 1, 'tablet');
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+function Humanoid () {}
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
