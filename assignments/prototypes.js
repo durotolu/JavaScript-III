@@ -45,7 +45,26 @@
   - When eating an edible, it should be pushed into a "stomach" property which is an array.
   - Give persons the ability to poop.
   - When pooping, the stomach should empty.
+*/
+function Person (name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
 
+Person.prototype.greet = function () {
+  return 'Hello my name is ' + this.name + ' I am ' + this.age + ' years old';
+}
+
+Person.prototype.eat = function (edibles) {
+  this.stomach.push(edibles); 
+}
+Person.prototype.poop = function () {
+  this.stomach = [];
+}
+const dude = new Person('duro', 2);
+
+/*
   TASK 2
 
   - Build a Car constructor that takes model name and make.
@@ -55,22 +74,68 @@
   - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   - Give cars the ability to be repaired.
   - A repaired car can be driven again.
+  */
+function Car (modelName, make) {
+  this.modelName = modelName;
+  this.make = make;
+  this.odometer = 0;
+}
+Car.prototype.drive = function (distance= 0) {
+  return this.odometer = this.odometer + Number(distance);
+}
+Car.prototype.crash = function () {
+  return "I crashed at " + this.odometer + " miles!"
+}
+Car.prototype.repaired = function () {
+  return "Can be driven again";
+}
+Car.prototype.reset = function (distance) {
+  return this.odometer = 0;
+}
 
+var firstCar = new Car ('toyota', 'corolla');
+
+/*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
   - Babies of course inherit the ability to greet, which can be strange.
   - Babies should have the ability to play, which persons don't.
   - By playing, a string is returned with some text of your choosing.
+  */
+function Baby (name, age) {
+  Person.apply(this, [name, age]);
+}
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function () {
+  return `${this.name} plays too much`;
+}
 
+//var smallie = new Baby ('ken', 2)
+
+  /*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
   With amazing and original capabilities. Build 3 small ones, or a very
   complicated one with lots of state. Surprise us!
-
 */
+function Devices (make, storage, size) {
+  this.make = make;
+  this.storage = storage;
+  this.size = size;
+}
+Devices.prototype.browse = function () {
+  return `${this.name} can browse`;
+}
+Devices.prototype.pocket = function () {
+  if (this.size === 'mobile' || this.size === 'tablet')
+  {
+    return `${this.make} can fit in your pocket or purse`;
+  } return `not pocket sized`;
+}
 
+var newPhone = new Devices('iphone', 1, 'tablet');
 /*
 
   STRETCH TASK
@@ -89,6 +154,14 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
+function GameObject (createdAt, name, dimensions) {
+  this.createdAt = createdAt;
+  this.name = name;
+  this.dimensions = dimensions;
+}
+GameObject.prototype.destroy = function () {
+  returns `${this.name} was removed from the game.`;
+}
 
 /*
   === CharacterStats ===
@@ -96,6 +169,14 @@
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+function CharacterStats (createdAt, name, dimensions, healthPoints) {
+  this.healthPoints = healthPoints;
+  GameObject.call(this, createdAt, name, dimensions)
+}
+CharacterStats.prototype.takeDamage = function () {
+  return `${this.name} took damage.`;
+}
+CharacterStats.prototype = Object.create(GameObject.prototype);
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -106,6 +187,16 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+function Humanoid (team, weapons, language, createdAt, name, dimensions, healthPoints) {
+  this.team = team;
+  this.weapons = weapons;
+  this.language = language;
+  CharacterStats.apply(this, [createdAt, name, dimensions, healthPoints]);
+}
+Humanoid.prototype.greet = function () {
+  return `${this.name} offers a greeting in ${this.language}.`;
+}
+Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -115,7 +206,7 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -173,4 +264,4 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
